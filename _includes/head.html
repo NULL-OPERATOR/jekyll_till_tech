@@ -9,4 +9,85 @@
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
+
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+  <script src="https://rawgit.com/reactive-ruby/inline-reactive-ruby/master/inline-reactive-ruby.js"></script>
+  <script src="https://reactive-ruby.github.io/react/js/test_chat_service.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+  <script type="text/ruby">
+  class App < React::Component::Base
+
+    def render
+      div do
+        Clock()
+        Nav()
+        Messages()
+        InputBox()
+      end
+    end
+  end
+
+  class Clock < React::Component::Base
+    before_mount { @timer = every(1) { force_update! } }
+    def render
+      "The current time is #{Time.now}"
+    end
+  end
+
+  class Clock < React::Component::Base
+    before_mount { @timer = every(1) { force_update! } }
+    def render
+      "The current time is #{Time.now}"
+    end
+  end
+
+  class Nav < React::Component::Base
+    def render
+      div {"Our Nav Bar Goes Here including a login box"}
+    end
+  end
+
+  class Messages < React::Component::Base
+    def render
+      # eventually we will loop and display each message
+      # for now we will just display one as an example
+      Message()
+    end
+  end
+
+  class Message < React::Component::Base
+
+    def render
+      FormattedDiv(markdown: "This **Markdown** will eventually be a message")
+    end
+  end
+
+  class InputBox < React::Component::Base
+    def render
+      div do
+        "An input box to send new messages will".br
+        "go here plus a display of the formatted markdown".br
+        FormattedDiv(markdown: "This **Markdown** will get updated as the user types")
+      end
+    end
+  end
+
+  class FormattedDiv < React::Component::Base
+
+    param :markdown, type: String
+
+    def render
+      div do
+        params.markdown
+      end
+    end
+  end
+  </script>
+  <!-- <link rel="stylesheet" href=""> -->
+  <!-- <script src="_site/react_lib/app.rb"></script> -->
+
 </head>
