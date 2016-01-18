@@ -13,9 +13,10 @@ gem 'opal-jquery'  # optional
 
 group :test do
   gem 'rspec'
-  gem 'capybara'
-  gem 'byebug'
   gem 'rspec-sinatra'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'byebug'
   gem 'sass'
   gem 'coveralls', require: false
 
