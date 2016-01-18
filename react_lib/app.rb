@@ -18,6 +18,7 @@ class App < React::Component::Base
       InputBox()
     end
   end
+
 end
 
 class Clock < React::Component::Base
@@ -36,14 +37,32 @@ class Clock2 < React::Component::Base
 end
 
 class Nav < React::Component::Base
+  param :login, type: Proc
+
+  before_mount do
+    state.current_user_name! nil
+    state.user_name_input! ""
+  end
 
   def render
     div do
-      input(class: :handle, type: :text, placeholder: "Enter Your Handle")
-      button(type: :button) { "login!" }.on(:click) do
-        alert("#{Element['input.handle'].value} logs in!")
+      input(type: :text, value: state.user_name_input, placeholder: "Enter Your Handle"
+      ).on(:change) do |e|
+        state.user_name_input! e.target.value
       end
+      button(type: :button) { "login!" }.on(:click) do
+        login!
+      end if valid_new_input?
     end
+  end
+
+  def valid_new_input?
+    state.user_name.present? && state.user_name_input != state.current_user_name
+  end
+
+  def login!
+    state.current_user_name! state.user_name_input
+    params.login(state.user_name_input)
   end
 
 end
